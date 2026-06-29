@@ -57,8 +57,8 @@ const analyzeResumeController = asyncHandler(async (req, res) => {
         throw new Error("Resume not found");
     }
 
-    console.log("Resume ID:", resume._id);
-    console.log("User ID:", resume.userId);
+    // console.log("Resume ID:", resume._id);
+    // console.log("User ID:", resume.userId);
 
 
     if (!resume) {
