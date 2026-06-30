@@ -30,6 +30,7 @@ IMPORTANT RULES:
 7. ATS score must be an integer between 0 and 100.
 8. Return ONLY valid JSON.
 9. Do NOT return Markdown, explanations, comments, or additional text.
+10. Resume Section Scores, Keyword Match give the score in the scale of 0 - 100
 
 If the input is NOT a resume, return:
 
