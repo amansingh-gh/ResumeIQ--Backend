@@ -103,9 +103,9 @@ ${resumeText}
 };
 
 
-const chatWithResume = async (resumeText, question) => {
+const chatWithResume = async ({ resumeText, question, history = [] }) => {
 
-    const prompt = `
+    const systemPrompt = `
 You are ResumeAI, an expert AI resume reviewer, ATS specialist, and career coach.
 
 You have access to the user's uploaded resume.
@@ -156,26 +156,38 @@ RESPONSE RULES
    - Resume readability.
 
 8. Keep the tone friendly, professional, and encouraging.
+`;
+
+    const messages = [
+        {
+            role: "system",
+            content: systemPrompt,
+        },
+
+        {
+            role: "system",
+            content: `This is the user's uploaded resume. Use it as the primary source of truth.
 
 Resume:
-${resumeText}
+${resumeText}`,
+        },
 
-Question:
-${question}
-`;
+        ...history,
+
+        {
+            role: "user",
+            content: question,
+        },
+    ];
 
     const response = await groq.chat.completions.create({
         model: "llama-3.3-70b-versatile",
-        messages: [
-            {
-                role: "user",
-                content: prompt,
-            },
-        ],
+        messages,
         temperature: 0.3,
     });
 
     return response.choices[0].message.content;
 };
+
 
 module.exports = { analyzeResume, chatWithResume };
